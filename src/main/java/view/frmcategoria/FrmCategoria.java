@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view.frmcategoria;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,10 +9,7 @@ import javax.swing.table.DefaultTableModel;
 public class FrmCategoria extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCategoria.class.getName());
-
-    /**
-     * Creates new form FrmPrincipal
-     */
+    
     public FrmCategoria() {
         initComponents();
         configurarEventos();
@@ -36,20 +28,10 @@ private void configurarEventos() {
             JOptionPane.showMessageDialog(this, "Informe o nome da categoria!");
             return;
         }
-
-        // Pega o modelo ativo da tabela
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-
-        // Gera ID automático
         int id = modelo.getRowCount() + 1;
-
-        // Adiciona linha
         modelo.addRow(new Object[]{id, nomeCat, tamanhoCat, embalagemCat});
-
-        // 🔄 Atualiza imediatamente
         tabela.updateUI();
-
-        // Limpa os campos
         nome.setText("");
         tamanho.setSelectedIndex(0);
         embalagem.setSelectedIndex(0);
