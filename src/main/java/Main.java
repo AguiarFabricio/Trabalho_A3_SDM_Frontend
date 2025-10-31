@@ -1,10 +1,10 @@
 
-import view.frmprincipal.FrmPrincipal;
+import view.frmproduto.FrmEditarProdutos;
 
 public class Main {
 
     public static void main(String[] args) {
-        FrmPrincipal frmPrincipal = new FrmPrincipal();
-        frmPrincipal.setVisible(true);
+        FrmEditarProdutos frmEditarProdutos = new FrmEditarProdutos();
+        frmEditarProdutos.setVisible(true);
     }
 }
