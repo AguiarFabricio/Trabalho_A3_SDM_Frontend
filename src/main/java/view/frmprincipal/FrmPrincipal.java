@@ -85,8 +85,8 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        PainelInicio = new javax.swing.JPanel();
+        GuiaGerenciador = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         GerenciarCat = new javax.swing.JLabel();
         GerenciarProd = new javax.swing.JLabel();
@@ -95,9 +95,9 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        PainelInicio.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 51));
+        GuiaGerenciador.setBackground(new java.awt.Color(0, 0, 51));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -123,32 +123,32 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
         Relatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconRelatorio.png"))); // NOI18N
         Relatorios.setText("Relatórios");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout GuiaGerenciadorLayout = new javax.swing.GroupLayout(GuiaGerenciador);
+        GuiaGerenciador.setLayout(GuiaGerenciadorLayout);
+        GuiaGerenciadorLayout.setHorizontalGroup(
+            GuiaGerenciadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
+                .addGroup(GuiaGerenciadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(GerenciarCat))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(GerenciarProd))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(MovimentarEst))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(Relatorios))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(jLabel1)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        GuiaGerenciadorLayout.setVerticalGroup(
+            GuiaGerenciadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(jLabel1)
                 .addGap(42, 42, 42)
@@ -159,31 +159,31 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
                 .addComponent(MovimentarEst)
                 .addGap(18, 18, 18)
                 .addComponent(Relatorios)
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addContainerGap(247, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 668, Short.MAX_VALUE))
+        javax.swing.GroupLayout PainelInicioLayout = new javax.swing.GroupLayout(PainelInicio);
+        PainelInicio.setLayout(PainelInicioLayout);
+        PainelInicioLayout.setHorizontalGroup(
+            PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PainelInicioLayout.createSequentialGroup()
+                .addComponent(GuiaGerenciador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 638, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        PainelInicioLayout.setVerticalGroup(
+            PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(GuiaGerenciador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PainelInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PainelInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -218,10 +218,10 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel GerenciarCat;
     private javax.swing.JLabel GerenciarProd;
+    private javax.swing.JPanel GuiaGerenciador;
     private javax.swing.JLabel MovimentarEst;
+    private javax.swing.JPanel PainelInicio;
     private javax.swing.JLabel Relatorios;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
