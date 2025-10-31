@@ -4,77 +4,79 @@
  */
 package view.frmprincipal;
 
+import view.frmcategoria.FrmCategoria;
+import view.frmproduto.FrmGerenciarProdutos;
+
 /**
  *
  * @author luiz
  */
 public class FrmPrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPrincipal.class.getName());
 
     /**
      * Creates new form FrmPrincipal
      */
-public FrmPrincipal() {
-    initComponents();
+    public FrmPrincipal() {
+        initComponents();
 
-    // Configura o cursor de "mão" para todas as labels
-    GerenciarCat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    GerenciarProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    MovimentarEst.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    Relatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        // Configura o cursor de "mão" para todas as labels
+        GerenciarCat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        GerenciarProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        MovimentarEst.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Relatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-    // Adiciona efeitos de hover e clique
-    addButtonEffect(GerenciarCat, "Gerenciar Categorias");
-    addButtonEffect(GerenciarProd, "Gerenciar Produtos");
-    addButtonEffect(MovimentarEst, "Movimentar Estoque");
-    addButtonEffect(Relatorios, "Relatórios");
-}
+        // Adiciona efeitos de hover e clique
+        addButtonEffect(GerenciarCat, "Gerenciar Categorias");
+        addButtonEffect(GerenciarProd, "Gerenciar Produtos");
+        addButtonEffect(MovimentarEst, "Movimentar Estoque");
+        addButtonEffect(Relatorios, "Relatórios");
+    }
 
 // 🔹 Método genérico que aplica efeitos em qualquer JLabel
-private void addButtonEffect(javax.swing.JLabel label, String acao) {
-    label.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            // Leve aumento no hover
-            label.setSize(label.getWidth() + 2, label.getHeight() + 2);
-            label.setLocation(label.getX() - 1, label.getY() - 1);
-        }
+    private void addButtonEffect(javax.swing.JLabel label, String acao) {
+        label.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                // Leve aumento no hover
+                label.setSize(label.getWidth() + 2, label.getHeight() + 2);
+                label.setLocation(label.getX() - 1, label.getY() - 1);
+            }
 
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            // Volta ao tamanho normal
-            label.setSize(label.getWidth() - 2, label.getHeight() - 2);
-            label.setLocation(label.getX() + 1, label.getY() + 1);
-            label.setOpaque(false);
-        }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                // Volta ao tamanho normal
+                label.setSize(label.getWidth() - 2, label.getHeight() - 2);
+                label.setLocation(label.getX() + 1, label.getY() + 1);
+                label.setOpaque(false);
+            }
 
-        @Override
-        public void mousePressed(java.awt.event.MouseEvent evt) {
-            // Efeito de clique: "aperta" o botão
-            label.setSize(label.getWidth() - 2, label.getHeight() - 2);
-            label.setLocation(label.getX() + 1, label.getY() + 1);
-        }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                // Efeito de clique: "aperta" o botão
+                label.setSize(label.getWidth() - 2, label.getHeight() - 2);
+                label.setLocation(label.getX() + 1, label.getY() + 1);
+            }
 
-        @Override
-        public void mouseReleased(java.awt.event.MouseEvent evt) {
-            // Volta ao tamanho original
-            label.setSize(label.getWidth() + 2, label.getHeight() + 2);
-            label.setLocation(label.getX() - 1, label.getY() - 1);
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                // Volta ao tamanho original
+                label.setSize(label.getWidth() + 2, label.getHeight() + 2);
+                label.setLocation(label.getX() - 1, label.getY() - 1);
 
-            // Aqui entra a ação do clique:
-            System.out.println("Botão clicado: " + acao);
+                // Aqui entra a ação do clique:
+                System.out.println("Botão clicado: " + acao);
 
-            // Exemplo: abrir outra janela (substitua conforme seu projeto)
-            /*
+                // Exemplo: abrir outra janela (substitua conforme seu projeto)
+                /*
             if (acao.equals("Gerenciar Categorias")) {
                 new FrmGerenciaCategoria().setVisible(true);
             }
-            */
-        }
-    });
-}
-
+                 */
+            }
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,11 +122,21 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
         GerenciarCat.setForeground(new java.awt.Color(255, 255, 255));
         GerenciarCat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconBarra.png"))); // NOI18N
         GerenciarCat.setText("Gerenciar Categorias");
+        GerenciarCat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GerenciarCatMouseClicked(evt);
+            }
+        });
 
         GerenciarProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         GerenciarProd.setForeground(new java.awt.Color(255, 255, 255));
         GerenciarProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconBarra.png"))); // NOI18N
         GerenciarProd.setText("Gerenciar Produtos");
+        GerenciarProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GerenciarProdMouseClicked(evt);
+            }
+        });
 
         MovimentarEst.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         MovimentarEst.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,7 +197,7 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
             .addGroup(PainelInicioLayout.createSequentialGroup()
                 .addComponent(GuiaGerenciador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         PainelInicioLayout.setVerticalGroup(
             PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,6 +219,30 @@ private void addButtonEffect(javax.swing.JLabel label, String acao) {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void GerenciarCatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GerenciarCatMouseClicked
+        try {
+            FrmCategoria frmCategoria = new FrmCategoria();
+            frmCategoria.setVisible(true);
+            frmCategoria.setLocationRelativeTo(this); // centraliza em relação à janela atual
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao abrir a tela de Categorias: " + e.getMessage());
+        }
+    }//GEN-LAST:event_GerenciarCatMouseClicked
+
+    private void GerenciarProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GerenciarProdMouseClicked
+        try {
+            FrmGerenciarProdutos frmGerenciarProdutos = new FrmGerenciarProdutos();
+            frmGerenciarProdutos.setVisible(true);
+            frmGerenciarProdutos.setLocationRelativeTo(this); // centraliza em relação à janela atual
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao abrir a tela de Categorias: " + e.getMessage());
+        }
+    }//GEN-LAST:event_GerenciarProdMouseClicked
 
     /**
      * @param args the command line arguments

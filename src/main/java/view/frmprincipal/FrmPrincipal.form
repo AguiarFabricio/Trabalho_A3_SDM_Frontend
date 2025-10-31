@@ -63,7 +63,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="GuiaGerenciador" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jLabel2" min="-2" pref="641" max="-2" attributes="0"/>
+                  <Component id="jLabel2" min="-2" pref="650" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -155,6 +155,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gerenciar Categorias"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="GerenciarCatMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="GerenciarProd">
               <Properties>
@@ -169,6 +172,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gerenciar Produtos"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="GerenciarProdMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="MovimentarEst">
               <Properties>
