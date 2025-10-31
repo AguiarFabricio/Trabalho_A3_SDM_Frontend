@@ -42,8 +42,8 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         JBcriar = new javax.swing.JToggleButton();
         JCBUnidade = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
-        JCBCategoria = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        JCBUnidade1 = new javax.swing.JComboBox<>();
 
         jToggleButton2.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         jToggleButton2.setText("Sair");
@@ -59,21 +59,27 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Nome:");
 
         jLabel5.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Categoria:");
 
         jLabel9.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Quantidade atual em estoque:");
 
         jLabel10.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Preço por unidade:");
 
         jLabel11.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Quantidade mínima em estoque:");
 
         jLabel12.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Quantidade máxima em estoque:");
 
         JTFNome.setBackground(new java.awt.Color(255, 255, 255));
@@ -158,20 +164,23 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         });
 
         jLabel13.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Tipo da unidade:");
 
-        JCBCategoria.setBackground(new java.awt.Color(255, 255, 255));
-        JCBCategoria.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
-        JCBCategoria.setForeground(new java.awt.Color(0, 0, 0));
-        JCBCategoria.setToolTipText("Kg");
-        JCBCategoria.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Cadastre Um Novo Produto");
+
+        JCBUnidade1.setBackground(new java.awt.Color(255, 255, 255));
+        JCBUnidade1.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        JCBUnidade1.setForeground(new java.awt.Color(0, 0, 0));
+        JCBUnidade1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Papelao", "Vidro", "Lata", " " }));
+        JCBUnidade1.setToolTipText("");
+        JCBUnidade1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JCBCategoriaActionPerformed(evt);
+                JCBUnidade1ActionPerformed(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 1, 24)); // NOI18N
-        jLabel1.setText("Cadastre Um Novo Produto");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -194,14 +203,14 @@ public class FrmCriarProduto extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(JTFNome, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(JTFatual, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JCBCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(JTFpreco, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(JTFmaxima, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(JTFminima, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JCBUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(JCBUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JCBUnidade1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(193, 193, 193)
                         .addComponent(jLabel1)))
@@ -239,7 +248,7 @@ public class FrmCriarProduto extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JCBCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JCBUnidade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(JBcriar)
                 .addGap(27, 27, 27)
@@ -311,13 +320,13 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JCBUnidadeActionPerformed
 
-    private void JCBCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JCBCategoriaActionPerformed
-
     private void JBcriarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JBcriarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_JBcriarMouseClicked
+
+    private void JCBUnidade1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBUnidade1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JCBUnidade1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,8 +366,8 @@ public class FrmCriarProduto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton JBcriar;
-    private javax.swing.JComboBox<String> JCBCategoria;
     private javax.swing.JComboBox<String> JCBUnidade;
+    private javax.swing.JComboBox<String> JCBUnidade1;
     private javax.swing.JTextField JTFNome;
     private javax.swing.JTextField JTFatual;
     private javax.swing.JTextField JTFmaxima;
