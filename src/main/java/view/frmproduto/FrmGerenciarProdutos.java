@@ -9,7 +9,7 @@ package view.frmproduto;
  * @author luiz
  */
 public class FrmGerenciarProdutos extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmGerenciarProdutos.class.getName());
 
     /**
@@ -29,33 +29,34 @@ public class FrmGerenciarProdutos extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        editarProduto = new javax.swing.JButton();
+        criarProduto = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        voltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 51));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconEdit.png"))); // NOI18N
-        jButton1.setText("Editar Produto");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        editarProduto.setBackground(new java.awt.Color(255, 255, 255));
+        editarProduto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        editarProduto.setForeground(new java.awt.Color(0, 0, 51));
+        editarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconEdit.png"))); // NOI18N
+        editarProduto.setText("Editar Produto");
+        editarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                editarProdutoActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 51));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconAdd.png"))); // NOI18N
-        jButton2.setText("Criar Produto");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        criarProduto.setBackground(new java.awt.Color(255, 255, 255));
+        criarProduto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        criarProduto.setForeground(new java.awt.Color(0, 0, 51));
+        criarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconAdd.png"))); // NOI18N
+        criarProduto.setText("Criar Produto");
+        criarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                criarProdutoActionPerformed(evt);
             }
         });
 
@@ -63,31 +64,53 @@ public class FrmGerenciarProdutos extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gerenciar Produtos");
 
+        voltar.setBackground(new java.awt.Color(255, 255, 255));
+        voltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        voltar.setForeground(new java.awt.Color(0, 0, 51));
+        voltar.setText("Voltar");
+        voltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                voltarMouseClicked(evt);
+            }
+        });
+        voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(214, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(criarProduto)
+                        .addGap(73, 73, 73)
+                        .addComponent(editarProduto)
+                        .addGap(218, 218, 218))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(201, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
-                .addComponent(jButton1)
-                .addGap(202, 202, 202))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(320, 320, 320)
+                .addGap(318, 318, 318)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(177, Short.MAX_VALUE)
+                .addContainerGap(196, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(223, 223, 223))
+                    .addComponent(criarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(152, 152, 152)
+                .addComponent(voltar)
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,13 +127,44 @@ public class FrmGerenciarProdutos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void editarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        try {
+            FrmEditarProdutos frmEditarProdutos = new FrmEditarProdutos();
+            frmEditarProdutos.setVisible(true);
+            frmEditarProdutos.setLocationRelativeTo(this); // centraliza em relação à janela atual
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao abrir a tela de criação: " + e.getMessage(),
+                    "Erro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_editarProdutoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void criarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        try {
+            FrmCriarProduto frmCriarProduto = new FrmCriarProduto();
+            frmCriarProduto.setVisible(true);
+            frmCriarProduto.setLocationRelativeTo(this); // centraliza em relação à janela atual
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao abrir a tela de criação: " + e.getMessage(),
+                    "Erro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_criarProdutoActionPerformed
+
+    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_voltarActionPerformed
+
+    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_voltarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -138,9 +192,10 @@ public class FrmGerenciarProdutos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton criarProduto;
+    private javax.swing.JButton editarProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }

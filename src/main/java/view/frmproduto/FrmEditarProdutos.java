@@ -3,21 +3,24 @@ package view.frmproduto;
 /**
  * Janela para editar produtos existentes no sistema.
  *
- * <p>Esta classe exibe uma tabela com todos os produtos cadastrados,
- * permite selecionar um produto e editar seus dados (nome, preço,
- * unidade de medida, quantidades e categoria).</p>
+ * <p>
+ * Esta classe exibe uma tabela com todos os produtos cadastrados, permite
+ * selecionar um produto e editar seus dados (nome, preço, unidade de medida,
+ * quantidades e categoria).</p>
  *
- * <p>Utiliza {@link ProdutoDAO} para operações de CRUD em produtos e
+ * <p>
+ * Utiliza {@link ProdutoDAO} para operações de CRUD em produtos e
  * {@link CategoriaDAO} para carregar categorias disponíveis.</p>
  *
  * @author Machadox18
  * @version 1.0
  */
 public class FrmEditarProdutos extends javax.swing.JFrame {
+
     public FrmEditarProdutos() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,6 +167,11 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         jToggleButton6.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         jToggleButton6.setForeground(new java.awt.Color(0, 0, 51));
         jToggleButton6.setText("Voltar");
+        jToggleButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jToggleButton6MouseClicked(evt);
+            }
+        });
 
         JCBUnidade.setBackground(new java.awt.Color(255, 255, 255));
         JCBUnidade.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -338,6 +346,10 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JTFNomeActionPerformed
 
+    private void jToggleButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton6MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jToggleButton6MouseClicked
 
     /**
      * @param args the command line arguments
