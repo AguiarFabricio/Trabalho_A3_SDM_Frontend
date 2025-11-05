@@ -63,10 +63,7 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         TableProdutos.setForeground(new java.awt.Color(0, 0, 0));
         TableProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Id", "Nome", "Preço por unidade ", "Tipo da unidade", "Quantidade atual", "Quantidade mínima", "Quantidade máxima", "Categoria"

@@ -174,7 +174,7 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         JCBUnidade1.setBackground(new java.awt.Color(255, 255, 255));
         JCBUnidade1.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         JCBUnidade1.setForeground(new java.awt.Color(0, 0, 0));
-        JCBUnidade1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Papelao", "Vidro", "Lata", " " }));
+        JCBUnidade1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Papelao", "Vidro", "Lata" }));
         JCBUnidade1.setToolTipText("");
         JCBUnidade1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
