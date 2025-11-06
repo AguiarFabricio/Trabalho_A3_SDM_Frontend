@@ -1,26 +1,77 @@
 package view.frmproduto;
 
+import client.Cliente;
+import javax.swing.JOptionPane;
+import model.Categoria;
+import model.Produto;
+import view.frmprincipal.FrmPrincipal;
+
 /**
  * Janela gráfica responsável por criar e cadastrar um novo produto no sistema.
  *
- * Esta classe utiliza {@link ProdutoDAO} para persistência e {@link CategoriaDAO}
- * para carregar categorias existentes. A interface gráfica permite ao usuário
- * informar nome, preço, unidade, quantidades (estoque, mínima, máxima) e
- * selecionar a categoria correspondente.
+ * Esta classe utiliza {@link ProdutoDAO} para persistência e
+ * {@link CategoriaDAO} para carregar categorias existentes. A interface gráfica
+ * permite ao usuário informar nome, preço, unidade, quantidades (estoque,
+ * mínima, máxima) e selecionar a categoria correspondente.
  *
  * @author Machadox18
  */
 public class FrmCriarProduto extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCriarProduto.class.getName());
 
-    /**
-     * Creates new form FrmGerenciarProdutos
-     */
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCriarProduto.class.getName());
+    private java.util.List<model.Categoria> listaDeCategorias = new java.util.ArrayList<>();
+
+
+    private void carregarCategorias() {
+        try {
+            // Conecta ao servidor e pede a lista de categorias
+            client.Cliente cliente = new client.Cliente();
+            cliente.conectar("localhost", 1234);
+            cliente.enviarComando("LISTAR_CATEGORIAS");
+
+            Object resposta = cliente.receberObjeto();
+            cliente.close();
+
+            // Debug: imprime resposta no console
+            System.out.println("carregarCategorias() resposta = " + (resposta == null ? "null" : resposta.getClass().getName()));
+
+            if (resposta instanceof java.util.List<?>) {
+                java.util.List<?> lista = (java.util.List<?>) resposta;
+
+                listaDeCategorias.clear();
+                comboCategoria.removeAllItems(); // combo é JComboBox<String> gerado pelo NetBeans
+
+                for (Object obj : lista) {
+                    if (obj instanceof model.Categoria) {
+                        model.Categoria categoria = (model.Categoria) obj;
+                        listaDeCategorias.add(categoria);           // guarda o objeto na lista paralela
+                        comboCategoria.addItem(categoria.getNome()); // adiciona SOMENTE o nome (String) ao combo
+                        System.out.println("carregarCategorias(): adicionada -> " + categoria.getNome());
+                    }
+                }
+
+                // se não veio nada, mantém um item informativo
+                if (comboCategoria.getItemCount() == 0) {
+                    comboCategoria.addItem("Nenhuma categoria disponível");
+                }
+            } else {
+                // caso a resposta não seja lista (debug)
+                System.out.println("carregarCategorias: resposta não é List: " + resposta);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar categorias: " + e.getMessage(),
+                    "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public FrmCriarProduto() {
         initComponents();
+        carregarCategorias(); // ✅ carrega as categorias no combo ao abrir
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,17 +84,17 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        JTFNome = new javax.swing.JTextField();
-        JTFpreco = new javax.swing.JTextField();
-        JTFatual = new javax.swing.JTextField();
-        JTFmaxima = new javax.swing.JTextField();
-        JTFminima = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
+        txtPreco = new javax.swing.JTextField();
+        txtQtdAtual = new javax.swing.JTextField();
+        txtQtdMax = new javax.swing.JTextField();
+        txtQtdMin = new javax.swing.JTextField();
         jToggleButton3 = new javax.swing.JToggleButton();
         JBcriar = new javax.swing.JToggleButton();
-        JCBUnidade = new javax.swing.JComboBox<>();
+        comboTipoUnidade = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        JCBUnidade1 = new javax.swing.JComboBox<>();
+        comboCategoria = new javax.swing.JComboBox<>();
 
         jToggleButton2.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         jToggleButton2.setText("Sair");
@@ -82,48 +133,48 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Quantidade máxima em estoque:");
 
-        JTFNome.setBackground(new java.awt.Color(255, 255, 255));
-        JTFNome.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
-        JTFNome.setForeground(new java.awt.Color(0, 0, 0));
-        JTFNome.addActionListener(new java.awt.event.ActionListener() {
+        txtNome.setBackground(new java.awt.Color(255, 255, 255));
+        txtNome.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
+        txtNome.setForeground(new java.awt.Color(0, 0, 0));
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFNomeActionPerformed(evt);
+                txtNomeActionPerformed(evt);
             }
         });
 
-        JTFpreco.setBackground(new java.awt.Color(255, 255, 255));
-        JTFpreco.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
-        JTFpreco.setForeground(new java.awt.Color(0, 0, 0));
-        JTFpreco.addActionListener(new java.awt.event.ActionListener() {
+        txtPreco.setBackground(new java.awt.Color(255, 255, 255));
+        txtPreco.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
+        txtPreco.setForeground(new java.awt.Color(0, 0, 0));
+        txtPreco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFprecoActionPerformed(evt);
+                txtPrecoActionPerformed(evt);
             }
         });
 
-        JTFatual.setBackground(new java.awt.Color(255, 255, 255));
-        JTFatual.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
-        JTFatual.setForeground(new java.awt.Color(0, 0, 0));
-        JTFatual.addActionListener(new java.awt.event.ActionListener() {
+        txtQtdAtual.setBackground(new java.awt.Color(255, 255, 255));
+        txtQtdAtual.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
+        txtQtdAtual.setForeground(new java.awt.Color(0, 0, 0));
+        txtQtdAtual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFatualActionPerformed(evt);
+                txtQtdAtualActionPerformed(evt);
             }
         });
 
-        JTFmaxima.setBackground(new java.awt.Color(255, 255, 255));
-        JTFmaxima.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
-        JTFmaxima.setForeground(new java.awt.Color(0, 0, 0));
-        JTFmaxima.addActionListener(new java.awt.event.ActionListener() {
+        txtQtdMax.setBackground(new java.awt.Color(255, 255, 255));
+        txtQtdMax.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
+        txtQtdMax.setForeground(new java.awt.Color(0, 0, 0));
+        txtQtdMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFmaximaActionPerformed(evt);
+                txtQtdMaxActionPerformed(evt);
             }
         });
 
-        JTFminima.setBackground(new java.awt.Color(255, 255, 255));
-        JTFminima.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
-        JTFminima.setForeground(new java.awt.Color(0, 0, 0));
-        JTFminima.addActionListener(new java.awt.event.ActionListener() {
+        txtQtdMin.setBackground(new java.awt.Color(255, 255, 255));
+        txtQtdMin.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
+        txtQtdMin.setForeground(new java.awt.Color(0, 0, 0));
+        txtQtdMin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFminimaActionPerformed(evt);
+                txtQtdMinActionPerformed(evt);
             }
         });
 
@@ -152,14 +203,14 @@ public class FrmCriarProduto extends javax.swing.JFrame {
             }
         });
 
-        JCBUnidade.setBackground(new java.awt.Color(255, 255, 255));
-        JCBUnidade.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
-        JCBUnidade.setForeground(new java.awt.Color(0, 0, 0));
-        JCBUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UN", "KG", "G", "L", "ML" }));
-        JCBUnidade.setToolTipText("Kg");
-        JCBUnidade.addActionListener(new java.awt.event.ActionListener() {
+        comboTipoUnidade.setBackground(new java.awt.Color(255, 255, 255));
+        comboTipoUnidade.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        comboTipoUnidade.setForeground(new java.awt.Color(0, 0, 0));
+        comboTipoUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UN", "KG", "G", "L", "ML" }));
+        comboTipoUnidade.setToolTipText("Kg");
+        comboTipoUnidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JCBUnidadeActionPerformed(evt);
+                comboTipoUnidadeActionPerformed(evt);
             }
         });
 
@@ -171,14 +222,14 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Cadastre Um Novo Produto");
 
-        JCBUnidade1.setBackground(new java.awt.Color(255, 255, 255));
-        JCBUnidade1.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
-        JCBUnidade1.setForeground(new java.awt.Color(0, 0, 0));
-        JCBUnidade1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Papelao", "Vidro", "Lata" }));
-        JCBUnidade1.setToolTipText("");
-        JCBUnidade1.addActionListener(new java.awt.event.ActionListener() {
+        comboCategoria.setBackground(new java.awt.Color(255, 255, 255));
+        comboCategoria.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        comboCategoria.setForeground(new java.awt.Color(0, 0, 0));
+        comboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Papelao", "Vidro", "Lata" }));
+        comboCategoria.setToolTipText("");
+        comboCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JCBUnidade1ActionPerformed(evt);
+                comboCategoriaActionPerformed(evt);
             }
         });
 
@@ -201,16 +252,16 @@ public class FrmCriarProduto extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(JTFNome, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JTFatual, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JTFpreco, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtQtdAtual, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPreco, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(JTFmaxima, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JTFminima, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtQtdMax, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtQtdMin, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JCBUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JCBUnidade1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(comboTipoUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(193, 193, 193)
                         .addComponent(jLabel1)))
@@ -224,31 +275,31 @@ public class FrmCriarProduto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JTFpreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JCBUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboTipoUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JTFatual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtQtdAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JTFminima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtQtdMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JTFmaxima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtQtdMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JCBUnidade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(JBcriar)
                 .addGap(27, 27, 27)
@@ -270,33 +321,32 @@ public class FrmCriarProduto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JTFNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFNomeActionPerformed
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:  
-    }//GEN-LAST:event_JTFNomeActionPerformed
+    }//GEN-LAST:event_txtNomeActionPerformed
 
-    private void JTFprecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFprecoActionPerformed
+    private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTFprecoActionPerformed
+    }//GEN-LAST:event_txtPrecoActionPerformed
 
-    private void JTFatualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFatualActionPerformed
+    private void txtQtdAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdAtualActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTFatualActionPerformed
+    }//GEN-LAST:event_txtQtdAtualActionPerformed
 
-    private void JTFmaximaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFmaximaActionPerformed
+    private void txtQtdMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdMaxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTFmaximaActionPerformed
+    }//GEN-LAST:event_txtQtdMaxActionPerformed
 
-    private void JTFminimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFminimaActionPerformed
+    private void txtQtdMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdMinActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTFminimaActionPerformed
+    }//GEN-LAST:event_txtQtdMinActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
-     * Evento de clique no botão de cancelar/fechar.
-     * Fecha a janela atual.
+     * Evento de clique no botão de cancelar/fechar. Fecha a janela atual.
      *
      * @param evt o evento de clique no botão
      */
@@ -306,27 +356,74 @@ public class FrmCriarProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     /**
-     * Evento de clique no botão "Criar".
-     * Lê os dados informados nos campos, valida as entradas e cria um novo produto.
-     * Em caso de sucesso, exibe mensagem de confirmação e limpa os campos.
+     * Evento de clique no botão "Criar". Lê os dados informados nos campos,
+     * valida as entradas e cria um novo produto. Em caso de sucesso, exibe
+     * mensagem de confirmação e limpa os campos.
      *
      * @param evt o evento de clique no botão
      */
     private void JBcriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBcriarActionPerformed
+        try {
+            // Verifica índice selecionado no combo (que contém nomes)
+            int idx = comboCategoria.getSelectedIndex();
+            model.Categoria categoriaSelecionada = null;
 
+            if (listaDeCategorias != null && idx >= 0 && idx < listaDeCategorias.size()) {
+                categoriaSelecionada = listaDeCategorias.get(idx);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Selecione uma categoria válida.",
+                        "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Cria e popula o produto usando os nomes de variáveis que você pediu
+            model.Produto produto = new model.Produto();
+            produto.setNome(txtNome.getText());
+            produto.setPreco(Double.parseDouble(txtPreco.getText()));
+            produto.setTipoUnidade(comboTipoUnidade.getSelectedItem().toString());
+            produto.setQuantidadeAtual(Integer.parseInt(txtQtdAtual.getText()));
+            produto.setQuantidadeMinima(Integer.parseInt(txtQtdMin.getText()));
+            produto.setQuantidadeMaxima(Integer.parseInt(txtQtdMax.getText()));
+            produto.setCategoria(categoriaSelecionada);
+
+            // Envia ao servidor
+            client.Cliente cliente = new client.Cliente();
+            cliente.conectar("localhost", 1234);
+
+            cliente.enviarComando("INSERIR_PRODUTO");
+            cliente.enviarObjeto(produto);
+
+            String resposta = cliente.receberMensagem();
+            cliente.close();
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    (resposta != null ? resposta : "Produto cadastrado com sucesso!"),
+                    "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException nfe) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Verifique os campos numéricos (preço, quantidades).",
+                    "Erro de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao cadastrar o produto:\n" + e.getMessage(),
+                    "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_JBcriarActionPerformed
 
-    private void JCBUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBUnidadeActionPerformed
+    private void comboTipoUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoUnidadeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JCBUnidadeActionPerformed
+    }//GEN-LAST:event_comboTipoUnidadeActionPerformed
 
     private void JBcriarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JBcriarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_JBcriarMouseClicked
 
-    private void JCBUnidade1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBUnidade1ActionPerformed
+    private void comboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JCBUnidade1ActionPerformed
+    }//GEN-LAST:event_comboCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,13 +463,8 @@ public class FrmCriarProduto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton JBcriar;
-    private javax.swing.JComboBox<String> JCBUnidade;
-    private javax.swing.JComboBox<String> JCBUnidade1;
-    private javax.swing.JTextField JTFNome;
-    private javax.swing.JTextField JTFatual;
-    private javax.swing.JTextField JTFmaxima;
-    private javax.swing.JTextField JTFminima;
-    private javax.swing.JTextField JTFpreco;
+    private javax.swing.JComboBox<String> comboCategoria;
+    private javax.swing.JComboBox<String> comboTipoUnidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -384,5 +476,10 @@ public class FrmCriarProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtPreco;
+    private javax.swing.JTextField txtQtdAtual;
+    private javax.swing.JTextField txtQtdMax;
+    private javax.swing.JTextField txtQtdMin;
     // End of variables declaration//GEN-END:variables
 }

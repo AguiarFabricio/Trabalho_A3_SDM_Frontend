@@ -3,10 +3,10 @@ package model;
 import java.io.Serializable;
 
 public class Categoria implements Serializable {
+    private static final long serialVersionUID = 1L; // 🔥 igual nos dois projetos!
+
     private int id;
     private String nome;
-    private EmbalagemProduto embalagem;
-    private TamanhoProduto tamanho;
 
     public Categoria() {}
 
@@ -15,15 +15,24 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public EmbalagemProduto getEmbalagem() { return embalagem; }
-    public void setEmbalagem(EmbalagemProduto embalagem) { this.embalagem = embalagem; }
+    public String getNome() {
+        return nome;
+    }
 
-    public TamanhoProduto getTamanho() { return tamanho; }
-    public void setTamanho(TamanhoProduto tamanho) { this.tamanho = tamanho; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

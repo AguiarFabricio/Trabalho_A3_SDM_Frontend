@@ -74,17 +74,17 @@
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="JTFNome" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="JTFatual" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="JTFpreco" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtNome" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtQtdAtual" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtPreco" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel5" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
-                                  <Component id="JTFmaxima" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="JTFminima" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtQtdMax" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtQtdMin" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel11" alignment="0" min="-2" pref="293" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="JCBUnidade" alignment="0" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="JCBUnidade1" alignment="0" min="-2" pref="293" max="-2" attributes="0"/>
+                              <Component id="comboTipoUnidade" alignment="0" min="-2" pref="293" max="-2" attributes="0"/>
+                              <Component id="comboCategoria" alignment="0" min="-2" pref="293" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -104,31 +104,31 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="JTFNome" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNome" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="JTFpreco" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPreco" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="JCBUnidade" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboTipoUnidade" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="JTFatual" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtQtdAtual" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel11" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="JTFminima" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtQtdMin" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="JTFmaxima" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtQtdMax" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="JCBUnidade1" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboCategoria" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="60" max="32767" attributes="0"/>
                   <Component id="JBcriar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -205,7 +205,7 @@
             <Property name="text" type="java.lang.String" value="Quantidade m&#xe1;xima em estoque:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="JTFNome">
+        <Component class="javax.swing.JTextField" name="txtNome">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -218,10 +218,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTFNomeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="JTFpreco">
+        <Component class="javax.swing.JTextField" name="txtPreco">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -234,10 +234,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTFprecoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPrecoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="JTFatual">
+        <Component class="javax.swing.JTextField" name="txtQtdAtual">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -250,10 +250,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTFatualActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtQtdAtualActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="JTFmaxima">
+        <Component class="javax.swing.JTextField" name="txtQtdMax">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -266,10 +266,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTFmaximaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtQtdMaxActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="JTFminima">
+        <Component class="javax.swing.JTextField" name="txtQtdMin">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -282,7 +282,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTFminimaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtQtdMinActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton3">
@@ -323,7 +323,7 @@
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="FrmCriarProduto_JBcriar"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="JCBUnidade">
+        <Component class="javax.swing.JComboBox" name="comboTipoUnidade">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -346,7 +346,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Kg"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCBUnidadeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboTipoUnidadeActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -374,7 +374,7 @@
             <Property name="text" type="java.lang.String" value="Cadastre Um Novo Produto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="JCBUnidade1">
+        <Component class="javax.swing.JComboBox" name="comboCategoria">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -395,7 +395,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCBUnidade1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboCategoriaActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
