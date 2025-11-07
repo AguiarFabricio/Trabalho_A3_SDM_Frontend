@@ -21,7 +21,6 @@ public class FrmCriarProduto extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCriarProduto.class.getName());
     private java.util.List<model.Categoria> listaDeCategorias = new java.util.ArrayList<>();
 
-
     private void carregarCategorias() {
         try {
             // Conecta ao servidor e pede a lista de categorias
@@ -400,7 +399,14 @@ public class FrmCriarProduto extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this,
                     (resposta != null ? resposta : "Produto cadastrado com sucesso!"),
                     "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
+            // ✅ LIMPA OS CAMPOS APÓS O CADASTRO
+            txtNome.setText("");
+            txtPreco.setText("");
+            txtQtdAtual.setText("");
+            txtQtdMin.setText("");
+            txtQtdMax.setText("");
+            comboTipoUnidade.setSelectedIndex(0);
+            comboCategoria.setSelectedIndex(0);
         } catch (NumberFormatException nfe) {
             javax.swing.JOptionPane.showMessageDialog(this,
                     "Verifique os campos numéricos (preço, quantidades).",
