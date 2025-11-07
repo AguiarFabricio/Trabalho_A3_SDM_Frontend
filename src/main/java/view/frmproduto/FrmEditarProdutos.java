@@ -220,6 +220,11 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         JBReajustarPrecos.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         JBReajustarPrecos.setForeground(new java.awt.Color(0, 0, 51));
         JBReajustarPrecos.setText("<html>Alterar o valor de  <br> todos os produtos</html>");
+        JBReajustarPrecos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBReajustarPrecosActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -463,6 +468,55 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_JBApagarActionPerformed
+
+    private void JBReajustarPrecosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBReajustarPrecosActionPerformed
+        // TODO add your handling code here:
+        try {
+            // Solicita ao usuário o percentual de reajuste
+            String input = JOptionPane.showInputDialog(this,
+                    "Informe o percentual de reajuste (%):",
+                    "Reajustar preços",
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (input == null || input.trim().isEmpty()) {
+                return; // usuário cancelou
+            }
+
+            // Converte o valor digitado para double
+            double percentual = Double.parseDouble(input.replace(",", "."));
+
+            // Confirmação
+            int opcao = JOptionPane.showConfirmDialog(this,
+                    "Deseja reajustar o preço de todos os produtos em " + percentual + "%?",
+                    "Confirmação", JOptionPane.YES_NO_OPTION);
+
+            if (opcao == JOptionPane.YES_OPTION) {
+                // Envia comando ao servidor
+                Cliente cliente = new Cliente();
+                cliente.conectar("localhost", 1234);
+
+                // Envia o comando e o percentual
+                cliente.enviar("REAJUSTAR_PRECOS", percentual);
+                cliente.close();
+
+                JOptionPane.showMessageDialog(this,
+                        "Reajuste aplicado com sucesso!",
+                        "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                carregarTabelaProdutos(); // Atualiza a tabela após o reajuste
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Valor inválido! Digite apenas números, ex: 10 ou -5.",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao reajustar preços:\n" + e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_JBReajustarPrecosActionPerformed
 
     /**
      * @param args the command line arguments

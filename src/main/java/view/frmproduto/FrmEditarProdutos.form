@@ -519,6 +519,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;Alterar o valor de  &lt;br&gt; todos os produtos&lt;/html&gt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBReajustarPrecosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
