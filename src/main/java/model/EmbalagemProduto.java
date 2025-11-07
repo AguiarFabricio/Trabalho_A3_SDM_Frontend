@@ -1,5 +1,7 @@
 package model;
 
 public enum EmbalagemProduto {
-    LATA, GARRAFA, CAIXA, PACOTE
+    PLASTICO,
+    VIDRO,
+    PAPELAO
 }

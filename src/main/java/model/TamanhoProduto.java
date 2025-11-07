@@ -1,5 +1,7 @@
 package model;
 
 public enum TamanhoProduto {
-    PEQUENO, MEDIO, GRANDE
+    PEQUENO,
+    MEDIO,
+    GRANDE
 }

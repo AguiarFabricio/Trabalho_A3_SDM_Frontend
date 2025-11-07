@@ -2,11 +2,9 @@ package view.frmcategoria;
 
 import javax.swing.JOptionPane;
 import model.Categoria;
+import model.TamanhoProduto;
+import model.EmbalagemProduto;
 
-/**
- *
- * @author luiz
- */
 public class FrmCategoria extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCategoria.class.getName());
@@ -339,6 +337,57 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        try {
+            int selectedRow = jTableCategoria.getSelectedRow();
+
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this,
+                        "Selecione uma categoria na tabela para alterar.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Pega o ID da primeira coluna da tabela
+            int id = (int) jTableCategoria.getValueAt(selectedRow, 0);
+            String nome = JTFNomeCadastro1.getText().trim();
+            String tamanho = (String) JCBTamanho1.getSelectedItem();
+            String embalagem = (String) JCBEmbalagem1.getSelectedItem();
+
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Informe o novo nome da categoria.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Cria o objeto Categoria com os novos dados
+            Categoria categoria = new Categoria();
+            categoria.setId(id);
+            categoria.setNome(nome);
+            categoria.setTamanho(model.TamanhoProduto.valueOf(tamanho.toUpperCase()));
+            categoria.setEmbalagem(model.EmbalagemProduto.valueOf(embalagem.toUpperCase()));
+
+            // Envia atualização para o servidor
+            client.Cliente cliente = new client.Cliente();
+            cliente.conectar("localhost", 1234);
+            cliente.enviarComando("ATUALIZAR_CATEGORIA");
+            cliente.enviarObjeto(categoria);
+            String resposta = cliente.receberMensagem();
+            cliente.close();
+
+            JOptionPane.showMessageDialog(this,
+                    (resposta != null ? resposta : "Categoria alterada com sucesso!"),
+                    "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpa os campos
+            JTFNomeCadastro1.setText("");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao alterar categoria:\n" + e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
