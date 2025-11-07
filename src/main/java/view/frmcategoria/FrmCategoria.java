@@ -1,5 +1,8 @@
 package view.frmcategoria;
 
+import javax.swing.JOptionPane;
+import model.Categoria;
+
 /**
  *
  * @author luiz
@@ -336,6 +339,7 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
@@ -354,6 +358,41 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        try {
+            // Captura os dados dos campos
+            String nome = JTFNomeCadastro.getText().trim();
+
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe o nome da categoria.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Cria objeto categoria
+            Categoria categoria = new Categoria();
+            categoria.setNome(nome);
+
+            // Envia para o servidor
+            client.Cliente cliente = new client.Cliente();
+            cliente.conectar("localhost", 1234);
+
+            cliente.enviarComando("INSERIR_CATEGORIA");
+            cliente.enviarObjeto(categoria);
+
+            String resposta = cliente.receberMensagem();
+            cliente.close();
+
+            JOptionPane.showMessageDialog(this,
+                    (resposta != null ? resposta : "Categoria cadastrada com sucesso!"),
+                    "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpa os campos
+            JTFNomeCadastro.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao cadastrar categoria:\n" + e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void voltarComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_voltarComponentMoved
