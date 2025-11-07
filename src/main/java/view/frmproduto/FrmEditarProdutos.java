@@ -1,20 +1,10 @@
 package view.frmproduto;
 
-/**
- * Janela para editar produtos existentes no sistema.
- *
- * <p>
- * Esta classe exibe uma tabela com todos os produtos cadastrados, permite
- * selecionar um produto e editar seus dados (nome, preço, unidade de medida,
- * quantidades e categoria).</p>
- *
- * <p>
- * Utiliza {@link ProdutoDAO} para operações de CRUD em produtos e
- * {@link CategoriaDAO} para carregar categorias disponíveis.</p>
- *
- * @author Machadox18
- * @version 1.0
- */
+import client.Cliente;
+import javax.swing.JOptionPane;
+import model.Categoria;
+import model.Produto;
+
 public class FrmEditarProdutos extends javax.swing.JFrame {
 
     public FrmEditarProdutos() {
@@ -195,6 +185,11 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         JBAlterar.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         JBAlterar.setForeground(new java.awt.Color(0, 0, 51));
         JBAlterar.setText("Alterar");
+        JBAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBAlterarActionPerformed(evt);
+            }
+        });
 
         JBApagar.setBackground(new java.awt.Color(255, 255, 255));
         JBApagar.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
@@ -388,6 +383,35 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jToggleButton6MouseClicked
+
+    private void JBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAlterarActionPerformed
+        // TODO add your handling code here
+       try {
+        int selectedRow = TabelaProdutos.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto para alterar.");
+            return;
+        }
+
+        Produto produto = new Produto();
+        produto.setId(Integer.parseInt(TabelaProdutos.getValueAt(selectedRow, 0).toString()));
+        produto.setNome(JTFNome.getText());
+        produto.setPreco(Double.parseDouble(JTFpreco.getText()));
+        produto.setTipoUnidade(JCBUnidade.getSelectedItem().toString());
+        produto.setQuantidadeAtual(Integer.parseInt(JTFatual.getText()));
+        produto.setQuantidadeMinima(Integer.parseInt(JTFminima.getText()));
+        produto.setQuantidadeMaxima(Integer.parseInt(JTFmaxima.getText()));
+        produto.setCategoria((Categoria) jComboBox1.getSelectedItem());
+
+        Cliente cliente = new Cliente();
+        cliente.enviar("ALTERAR_PRODUTO", produto);
+
+        JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
+        carregarTabelaProdutos();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao alterar produto: " + e.getMessage());
+    }  
+    }//GEN-LAST:event_JBAlterarActionPerformed
 
     /**
      * @param args the command line arguments
