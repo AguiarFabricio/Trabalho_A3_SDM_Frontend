@@ -210,6 +210,11 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
                 jToggleButton6MouseClicked(evt);
             }
         });
+        jToggleButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton6ActionPerformed(evt);
+            }
+        });
 
         JCBUnidade.setBackground(new java.awt.Color(255, 255, 255));
         JCBUnidade.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -517,6 +522,11 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_JBReajustarPrecosActionPerformed
+
+    private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jToggleButton6ActionPerformed
 
     /**
      * @param args the command line arguments
