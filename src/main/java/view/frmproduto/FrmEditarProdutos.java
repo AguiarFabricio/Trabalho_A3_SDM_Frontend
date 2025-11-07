@@ -195,6 +195,11 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         JBApagar.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         JBApagar.setForeground(new java.awt.Color(0, 0, 51));
         JBApagar.setText("Apagar");
+        JBApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBApagarActionPerformed(evt);
+            }
+        });
 
         jToggleButton6.setBackground(new java.awt.Color(255, 255, 255));
         jToggleButton6.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
@@ -386,32 +391,78 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
 
     private void JBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAlterarActionPerformed
         // TODO add your handling code here
-       try {
-        int selectedRow = TabelaProdutos.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um produto para alterar.");
+        try {
+            int selectedRow = TabelaProdutos.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um produto para alterar.");
+                return;
+            }
+
+            Produto produto = new Produto();
+            produto.setId(Integer.parseInt(TabelaProdutos.getValueAt(selectedRow, 0).toString()));
+            produto.setNome(JTFNome.getText());
+            produto.setPreco(Double.parseDouble(JTFpreco.getText()));
+            produto.setTipoUnidade(JCBUnidade.getSelectedItem().toString());
+            produto.setQuantidadeAtual(Integer.parseInt(JTFatual.getText()));
+            produto.setQuantidadeMinima(Integer.parseInt(JTFminima.getText()));
+            produto.setQuantidadeMaxima(Integer.parseInt(JTFmaxima.getText()));
+            produto.setCategoria((Categoria) jComboBox1.getSelectedItem());
+
+            Cliente cliente = new Cliente();
+            cliente.enviar("ALTERAR_PRODUTO", produto);
+
+            JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
+            carregarTabelaProdutos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao alterar produto: " + e.getMessage());
+        }
+    }//GEN-LAST:event_JBAlterarActionPerformed
+
+    private void JBApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBApagarActionPerformed
+        // TODO add your handling code here:
+        int linhaSelecionada = TabelaProdutos.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um produto para apagar.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        Produto produto = new Produto();
-        produto.setId(Integer.parseInt(TabelaProdutos.getValueAt(selectedRow, 0).toString()));
-        produto.setNome(JTFNome.getText());
-        produto.setPreco(Double.parseDouble(JTFpreco.getText()));
-        produto.setTipoUnidade(JCBUnidade.getSelectedItem().toString());
-        produto.setQuantidadeAtual(Integer.parseInt(JTFatual.getText()));
-        produto.setQuantidadeMinima(Integer.parseInt(JTFminima.getText()));
-        produto.setQuantidadeMaxima(Integer.parseInt(JTFmaxima.getText()));
-        produto.setCategoria((Categoria) jComboBox1.getSelectedItem());
+        // Confirmação antes de excluir
+        int opcao = JOptionPane.showConfirmDialog(this,
+                "Deseja realmente apagar este produto?",
+                "Confirmação", JOptionPane.YES_NO_OPTION);
 
-        Cliente cliente = new Cliente();
-        cliente.enviar("ALTERAR_PRODUTO", produto);
+        if (opcao == JOptionPane.YES_OPTION) {
+            try {
+                // Obtém o ID da linha selecionada (coluna 0)
+                int idProduto = (int) TabelaProdutos.getValueAt(linhaSelecionada, 0);
 
-        JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
-        carregarTabelaProdutos();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Erro ao alterar produto: " + e.getMessage());
-    }  
-    }//GEN-LAST:event_JBAlterarActionPerformed
+                // Cria o objeto Produto com o ID
+                Produto produto = new Produto();
+                produto.setId(idProduto);
+
+                // Envia o comando para o servidor
+                Cliente cliente = new Cliente();
+                cliente.conectar("localhost", 1234);
+                cliente.enviar("EXCLUIR_PRODUTO", produto);
+                cliente.close();
+
+                JOptionPane.showMessageDialog(this,
+                        "Produto apagado com sucesso!",
+                        "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                carregarTabelaProdutos(); // Recarrega a tabela após excluir
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao apagar produto:\n" + e.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_JBApagarActionPerformed
 
     /**
      * @param args the command line arguments
