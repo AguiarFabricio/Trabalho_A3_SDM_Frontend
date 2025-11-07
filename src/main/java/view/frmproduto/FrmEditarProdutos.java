@@ -107,7 +107,7 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nome", "Preço por unidade ", "Tipo da unidade", "Quantidade atual", "Quantidade mínima", "Quantidade máxima", "Categoria"
+                "Id", "Nome", "Tipo da unidade", "Preço por unidade ", "Quantidade atual", "Quantidade mínima", "Quantidade máxima", "Categoria"
             }
         ));
         jScrollPane1.setViewportView(TabelaProdutos);

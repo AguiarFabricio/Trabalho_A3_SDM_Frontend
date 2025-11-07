@@ -209,8 +209,8 @@
                   <Table columnCount="8" rowCount="0">
                     <Column editable="true" title="Id" type="java.lang.Object"/>
                     <Column editable="true" title="Nome" type="java.lang.Object"/>
-                    <Column editable="true" title="Pre&#xe7;o por unidade " type="java.lang.Object"/>
                     <Column editable="true" title="Tipo da unidade" type="java.lang.Object"/>
+                    <Column editable="true" title="Pre&#xe7;o por unidade " type="java.lang.Object"/>
                     <Column editable="true" title="Quantidade atual" type="java.lang.Object"/>
                     <Column editable="true" title="Quantidade m&#xed;nima" type="java.lang.Object"/>
                     <Column editable="true" title="Quantidade m&#xe1;xima" type="java.lang.Object"/>
