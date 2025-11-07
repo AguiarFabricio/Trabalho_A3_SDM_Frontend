@@ -7,10 +7,11 @@ package view.frmcategoria;
 public class FrmCategoria extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCategoria.class.getName());
-    
+
     public FrmCategoria() {
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +75,11 @@ public class FrmCategoria extends javax.swing.JFrame {
 
         JTFNomeCadastro.setBackground(new java.awt.Color(255, 255, 255));
         JTFNomeCadastro.setForeground(new java.awt.Color(0, 0, 0));
+        JTFNomeCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTFNomeCadastroActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -110,6 +116,15 @@ public class FrmCategoria extends javax.swing.JFrame {
             }
         ));
         jTableCategoria.setToolTipText("");
+        jTableCategoria.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTableCategoriaAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane1.setViewportView(jTableCategoria);
 
         jLabel10.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
@@ -174,6 +189,11 @@ public class FrmCategoria extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Cadastrar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         voltar.setBackground(new java.awt.Color(0, 0, 51));
         voltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -182,6 +202,11 @@ public class FrmCategoria extends javax.swing.JFrame {
         voltar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 voltarMouseClicked(evt);
+            }
+        });
+        voltar.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                voltarComponentMoved(evt);
             }
         });
         voltar.addActionListener(new java.awt.event.ActionListener() {
@@ -319,8 +344,29 @@ public class FrmCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarMouseClicked
 
     private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here                                     
+        // Fecha a janela atual e retorna ao menu principal
+        this.dispose();
+        // Se houver outra tela principal:
+        // new MenuPrincipalView().setVisible(true);
+
     }//GEN-LAST:event_voltarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void voltarComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_voltarComponentMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_voltarComponentMoved
+
+    private void jTableCategoriaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTableCategoriaAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableCategoriaAncestorAdded
+
+    private void JTFNomeCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFNomeCadastroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTFNomeCadastroActionPerformed
 
     /**
      * @param args the command line arguments
