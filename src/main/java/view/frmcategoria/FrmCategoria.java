@@ -45,6 +45,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         voltar = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,6 +217,12 @@ public class FrmCategoria extends javax.swing.JFrame {
             }
         });
 
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PainelInicioLayout = new javax.swing.GroupLayout(PainelInicio);
         PainelInicio.setLayout(PainelInicioLayout);
         PainelInicioLayout.setHorizontalGroup(
@@ -242,8 +249,12 @@ public class FrmCategoria extends javax.swing.JFrame {
                                     .addComponent(JCBEmbalagem, 0, 242, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                                .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                                .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(voltar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelInicioLayout.createSequentialGroup()
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(59, 59, 59)))))))
                 .addGap(116, 116, 116)
                 .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PainelInicioLayout.createSequentialGroup()
@@ -272,8 +283,13 @@ public class FrmCategoria extends javax.swing.JFrame {
                         .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(jLabel14))
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel7)
+                        .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PainelInicioLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel7))
+                            .addGroup(PainelInicioLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JTFNomeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
@@ -285,7 +301,7 @@ public class FrmCategoria extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JCBEmbalagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelInicioLayout.createSequentialGroup()
-                        .addGap(0, 30, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JTFNomeCadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,7 +319,7 @@ public class FrmCategoria extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton4)
                     .addComponent(voltar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -323,17 +339,61 @@ public class FrmCategoria extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JCBTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTamanhoActionPerformed
-        // Não implementado
-    }//GEN-LAST:event_JCBTamanhoActionPerformed
+    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
+        // TODO add your handling code here
+        // Fecha a janela atual e retorna ao menu principal
+        this.dispose();
+        // Se houver outra tela principal:
+        // new MenuPrincipalView().setVisible(true);
+    }//GEN-LAST:event_voltarActionPerformed
 
-    private void JCBTamanho1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTamanho1ActionPerformed
+    private void voltarComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_voltarComponentMoved
         // TODO add your handling code here:
-    }//GEN-LAST:event_JCBTamanho1ActionPerformed
+    }//GEN-LAST:event_voltarComponentMoved
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_voltarMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // Captura os dados dos campos
+            String nome = JTFNomeCadastro.getText().trim();
+
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe o nome da categoria.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Cria objeto categoria
+            Categoria categoria = new Categoria();
+            categoria.setNome(nome);
+
+            // Envia para o servidor
+            client.Cliente cliente = new client.Cliente();
+            cliente.conectar("localhost", 1234);
+
+            cliente.enviarComando("INSERIR_CATEGORIA");
+            cliente.enviarObjeto(categoria);
+
+            String resposta = cliente.receberMensagem();
+            cliente.close();
+
+            JOptionPane.showMessageDialog(this,
+                    (resposta != null ? resposta : "Categoria cadastrada com sucesso!"),
+                    "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpa os campos
+            JTFNomeCadastro.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao cadastrar categoria:\n" + e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -388,65 +448,47 @@ public class FrmCategoria extends javax.swing.JFrame {
                     "Erro ao alterar categoria:\n" + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_voltarMouseClicked
-
-    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
-        // TODO add your handling code here                                     
-        // Fecha a janela atual e retorna ao menu principal
-        this.dispose();
-        // Se houver outra tela principal:
-        // new MenuPrincipalView().setVisible(true);
-
-    }//GEN-LAST:event_voltarActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            // Captura os dados dos campos
-            String nome = JTFNomeCadastro.getText().trim();
+            String idTexto = txtId.getText().trim(); // ✅ corrigido
 
-            if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Informe o nome da categoria.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            if (idTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe o ID da categoria para apagar.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Cria objeto categoria
-            Categoria categoria = new Categoria();
-            categoria.setNome(nome);
+            int id = Integer.parseInt(idTexto);
 
-            // Envia para o servidor
             client.Cliente cliente = new client.Cliente();
             cliente.conectar("localhost", 1234);
 
-            cliente.enviarComando("INSERIR_CATEGORIA");
-            cliente.enviarObjeto(categoria);
+            cliente.enviarComando("EXCLUIR_CATEGORIA");
+            cliente.enviarObjeto(id);
 
             String resposta = cliente.receberMensagem();
             cliente.close();
 
             JOptionPane.showMessageDialog(this,
-                    (resposta != null ? resposta : "Categoria cadastrada com sucesso!"),
+                    (resposta != null ? resposta : "Categoria removida com sucesso!"),
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-            // Limpa os campos
+            // 🧹 Limpa os campos
+            txtId.setText(""); // ✅ corrigido
             JTFNomeCadastro.setText("");
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                    "Erro ao cadastrar categoria:\n" + e.getMessage(),
+                    "Erro ao apagar categoria:\n" + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void voltarComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_voltarComponentMoved
+    private void JCBTamanho1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTamanho1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_voltarComponentMoved
+    }//GEN-LAST:event_JCBTamanho1ActionPerformed
 
     private void jTableCategoriaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTableCategoriaAncestorAdded
         // TODO add your handling code here:
@@ -455,6 +497,15 @@ public class FrmCategoria extends javax.swing.JFrame {
     private void JTFNomeCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFNomeCadastroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTFNomeCadastroActionPerformed
+
+    private void JCBTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTamanhoActionPerformed
+        // Não implementado
+    }//GEN-LAST:event_JCBTamanhoActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+        txtId.setEnabled(false);
+    }//GEN-LAST:event_txtIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,6 +555,7 @@ public class FrmCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableCategoria;
+    private javax.swing.JTextField txtId;
     private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }
