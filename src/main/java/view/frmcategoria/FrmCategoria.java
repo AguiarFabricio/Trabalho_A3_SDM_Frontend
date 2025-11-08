@@ -3,8 +3,10 @@ package view.frmcategoria;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Categoria;
-import model.TamanhoProduto;
-import model.EmbalagemProduto;
+import client.Cliente;
+import model.Categoria;
+import java.util.List;
+import javax.swing.JTable;
 
 public class FrmCategoria extends javax.swing.JFrame {
 
@@ -30,8 +32,6 @@ public class FrmCategoria extends javax.swing.JFrame {
             JCBTamanho1.addItem(t.name());
         }
     }
-
-    private java.util.List<model.Categoria> listaDeCategorias;
 
     private void carregarCategorias() {
         try {
@@ -89,7 +89,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         btnApagar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
         voltar = new javax.swing.JButton();
         JCBEmbalagem2 = new javax.swing.JComboBox<>();
         JTFNomeCadastro1 = new javax.swing.JTextField();
@@ -231,13 +231,13 @@ public class FrmCategoria extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 0, 51));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Cadastrar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrar.setBackground(new java.awt.Color(0, 0, 51));
+        btnCadastrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnCadastrarActionPerformed(evt);
             }
         });
 
@@ -304,7 +304,7 @@ public class FrmCategoria extends javax.swing.JFrame {
                                     .addComponent(JTFNomeCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                                     .addComponent(JCBEmbalagem, 0, 242, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                                 .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(116, 116, 116)
@@ -363,7 +363,7 @@ public class FrmCategoria extends javax.swing.JFrame {
                 .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnApagar)
                     .addComponent(btnAlterar)
-                    .addComponent(jButton4)
+                    .addComponent(btnCadastrar)
                     .addComponent(voltar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,22 +402,23 @@ public class FrmCategoria extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_voltarMouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
         try {
-            // Captura os dados dos campos
             String nome = JTFNomeCadastro.getText().trim();
+            String embalagem = JCBEmbalagem.getSelectedItem().toString();
+            String tamanho = JCBTamanho.getSelectedItem().toString();
 
             if (nome.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Informe o nome da categoria.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Cria objeto categoria
             Categoria categoria = new Categoria();
             categoria.setNome(nome);
+            categoria.setEmbalagem(model.EmbalagemProduto.valueOf(embalagem.toUpperCase()));
+            categoria.setTamanho(model.TamanhoProduto.valueOf(tamanho.toUpperCase()));
 
-            // Envia para o servidor
             client.Cliente cliente = new client.Cliente();
             cliente.conectar("localhost", 1234);
 
@@ -430,16 +431,16 @@ public class FrmCategoria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     (resposta != null ? resposta : "Categoria cadastrada com sucesso!"),
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-            // Limpa os campos
             JTFNomeCadastro.setText("");
+            carregarCategorias();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
                     "Erro ao cadastrar categoria:\n" + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
@@ -508,52 +509,49 @@ public class FrmCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+        int linha = TabelaCategorias.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione uma categoria na tabela para excluir.");
+            return;
+        }
+
+        // Pega o ID e o nome diretamente da tabela
+        int id = (int) TabelaCategorias.getValueAt(linha, 0); // coluna 0 = ID
+        String nome = (String) TabelaCategorias.getValueAt(linha, 1); // coluna 1 = Nome
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Deseja realmente excluir a categoria \"" + nome + "\"?",
+                "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
         try {
-            int selectedRow = TabelaCategorias.getSelectedRow();
-
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this,
-                        "Selecione uma categoria na tabela para apagar.",
-                        "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            int id = (int) TabelaCategorias.getValueAt(selectedRow, 0);
-            String nome = TabelaCategorias.getValueAt(selectedRow, 1).toString();
-
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "Tem certeza que deseja apagar a categoria \"" + nome + "\"?",
-                    "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-
-            if (confirm != JOptionPane.YES_OPTION) {
-                return;
-            }
-
+            // Conecta com o servidor
             client.Cliente cliente = new client.Cliente();
             cliente.conectar("localhost", 1234);
+
+            // Envia comando de exclusão e ID
             cliente.enviarComando("EXCLUIR_CATEGORIA");
             cliente.enviarObjeto(id);
 
+            // Recebe resposta do servidor
             String resposta = cliente.receberMensagem();
             cliente.close();
 
             JOptionPane.showMessageDialog(this,
-                    (resposta != null ? resposta : "Categoria removida com sucesso!"),
+                    resposta != null ? resposta : "Categoria excluída com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-            // 🧹 Limpa os campos e atualiza a tabela
-            JTFNomeCadastro1.setText("");
-            JCBTamanho1.setSelectedIndex(0);
-            JCBEmbalagem2.setSelectedIndex(0);
-            carregarCategorias();
+            carregarCategorias(); // Atualiza a tabela
 
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                    "Erro ao apagar categoria:\n" + e.getMessage(),
+                    "Erro ao excluir categoria:\n" + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btnApagarActionPerformed
 
     private void JCBTamanho1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTamanho1ActionPerformed
@@ -647,7 +645,7 @@ public class FrmCategoria extends javax.swing.JFrame {
     private javax.swing.JTable TabelaCategorias;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnApagar;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
