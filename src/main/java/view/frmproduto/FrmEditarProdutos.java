@@ -2,6 +2,7 @@ package view.frmproduto;
 
 import client.Cliente;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Categoria;
 import model.Produto;
 
@@ -10,6 +11,7 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
     public FrmEditarProdutos() {
         initComponents();
         carregarTabelaProdutos();
+        carregarComboCategorias();
     }
 
     private void carregarTabelaProdutos() {
@@ -57,6 +59,27 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         }
     }
 
+    private void carregarComboCategorias() {
+        try {
+            Cliente cliente = new Cliente();
+            cliente.conectar("localhost", 1234);
+            cliente.enviarComando("LISTAR_CATEGORIAS");
+            Object resposta = cliente.receberObjeto();
+            cliente.close();
+
+            Categoria.removeAllItems(); // limpa o combo
+            if (resposta instanceof java.util.List<?>) {
+                java.util.List<Categoria> lista = (java.util.List<Categoria>) resposta;
+                for (Categoria c : lista) {
+                    Categoria.addItem(c); // adiciona objetos Categoria diretamente
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao carregar categorias:\n" + e.getMessage());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -81,9 +104,8 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         JBApagar = new javax.swing.JToggleButton();
         jToggleButton6 = new javax.swing.JToggleButton();
         JCBUnidade = new javax.swing.JComboBox<>();
-        JBReajustarPrecos = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        Categoria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciamento de Produtos");
@@ -100,6 +122,11 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
                 "Id", "Nome", "Tipo da unidade", "Preço por unidade ", "Quantidade atual", "Quantidade mínima", "Quantidade máxima", "Categoria"
             }
         ));
+        TabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaProdutosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelaProdutos);
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
@@ -221,45 +248,36 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         JCBUnidade.setForeground(new java.awt.Color(0, 0, 0));
         JCBUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UN", "KG", "G", "L", "ML" }));
 
-        JBReajustarPrecos.setBackground(new java.awt.Color(255, 255, 255));
-        JBReajustarPrecos.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
-        JBReajustarPrecos.setForeground(new java.awt.Color(0, 0, 51));
-        JBReajustarPrecos.setText("<html>Alterar o valor de  <br> todos os produtos</html>");
-        JBReajustarPrecos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBReajustarPrecosActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gerenciamento de Produtos existentes");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
+        Categoria.setBackground(new java.awt.Color(255, 255, 255));
+        Categoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Categoria.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(359, 359, 359)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JTFminima, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9)
-                            .addComponent(JTFmaxima, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                            .addComponent(jLabel11)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(JTFatual, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(361, Short.MAX_VALUE))
+                    .addComponent(jLabel8)
+                    .addComponent(JTFatual, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(714, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(359, 359, 359)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JTFminima, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel9)
+                    .addComponent(JTFmaxima, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                    .addComponent(jLabel11)
+                    .addComponent(Categoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jToggleButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -287,11 +305,7 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
                                     .addComponent(JBAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(473, 473, 473)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(JBApagar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(JBReajustarPrecos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jToggleButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(JBApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(21, 21, 21)))
                     .addContainerGap()))
         );
@@ -305,11 +319,16 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JTFmaxima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(JTFmaxima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jToggleButton6)
+                        .addGap(20, 20, 20)))
+                .addComponent(Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -343,12 +362,8 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(JBAlterar)
                             .addGap(18, 18, 18)
-                            .addComponent(JBApagar)
-                            .addGap(18, 18, 18)
-                            .addComponent(JBReajustarPrecos, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jToggleButton6)))
-                    .addContainerGap(223, Short.MAX_VALUE)))
+                            .addComponent(JBApagar)))
+                    .addContainerGap(261, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -409,21 +424,46 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
             }
 
             Produto produto = new Produto();
-            produto.setId(Integer.parseInt(TabelaProdutos.getValueAt(selectedRow, 0).toString()));
+            produto.setId(Integer.parseInt(JTFId.getText()));
             produto.setNome(JTFNome.getText());
             produto.setPreco(Double.parseDouble(JTFpreco.getText()));
             produto.setTipoUnidade(JCBUnidade.getSelectedItem().toString());
             produto.setQuantidadeAtual(Integer.parseInt(JTFatual.getText()));
             produto.setQuantidadeMinima(Integer.parseInt(JTFminima.getText()));
             produto.setQuantidadeMaxima(Integer.parseInt(JTFmaxima.getText()));
-            produto.setCategoria((Categoria) jComboBox1.getSelectedItem());
+            produto.setCategoria((Categoria) Categoria.getSelectedItem());
 
+            System.out.println("Produto a enviar: " + produto);
+
+            // Seleciona a categoria do combo (assumindo que você popula o combo com objetos Categoria)
+            Object categoriaObj = TabelaProdutos.getValueAt(selectedRow, 7);
+            if (categoriaObj instanceof Categoria cat) {
+                Categoria.setSelectedItem(cat);
+            } else if (categoriaObj != null) {
+                // Caso a tabela só tenha o nome
+                for (int i = 0; i < Categoria.getItemCount(); i++) {
+                    if (Categoria.getItemAt(i).getNome().equals(categoriaObj.toString())) {
+                        Categoria.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            }
+
+            // Envia ao servidor
             Cliente cliente = new Cliente();
+            cliente.conectar("localhost", 1234);
             cliente.enviar("ALTERAR_PRODUTO", produto);
+            cliente.close();
 
             JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
+
+            // Recarrega a tabela para atualizar os dados
             carregarTabelaProdutos();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Erro: insira valores válidos nos campos numéricos.");
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao alterar produto: " + e.getMessage());
         }
     }//GEN-LAST:event_JBAlterarActionPerformed
@@ -474,59 +514,42 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JBApagarActionPerformed
 
-    private void JBReajustarPrecosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBReajustarPrecosActionPerformed
-        // TODO add your handling code here:
-        try {
-            // Solicita ao usuário o percentual de reajuste
-            String input = JOptionPane.showInputDialog(this,
-                    "Informe o percentual de reajuste (%):",
-                    "Reajustar preços",
-                    JOptionPane.QUESTION_MESSAGE);
-
-            if (input == null || input.trim().isEmpty()) {
-                return; // usuário cancelou
-            }
-
-            // Converte o valor digitado para double
-            double percentual = Double.parseDouble(input.replace(",", "."));
-
-            // Confirmação
-            int opcao = JOptionPane.showConfirmDialog(this,
-                    "Deseja reajustar o preço de todos os produtos em " + percentual + "%?",
-                    "Confirmação", JOptionPane.YES_NO_OPTION);
-
-            if (opcao == JOptionPane.YES_OPTION) {
-                // Envia comando ao servidor
-                Cliente cliente = new Cliente();
-                cliente.conectar("localhost", 1234);
-
-                // Envia o comando e o percentual
-                cliente.enviar("REAJUSTAR_PRECOS", percentual);
-                cliente.close();
-
-                JOptionPane.showMessageDialog(this,
-                        "Reajuste aplicado com sucesso!",
-                        "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-                carregarTabelaProdutos(); // Atualiza a tabela após o reajuste
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Valor inválido! Digite apenas números, ex: 10 ou -5.",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this,
-                    "Erro ao reajustar preços:\n" + e.getMessage(),
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_JBReajustarPrecosActionPerformed
 
     private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jToggleButton6ActionPerformed
+
+    private void TabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaProdutosMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = TabelaProdutos.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        // Preenche os campos
+        JTFId.setText(TabelaProdutos.getValueAt(selectedRow, 0).toString());
+        JTFNome.setText(TabelaProdutos.getValueAt(selectedRow, 1).toString());
+        JCBUnidade.setSelectedItem(TabelaProdutos.getValueAt(selectedRow, 2).toString());
+        JTFpreco.setText(TabelaProdutos.getValueAt(selectedRow, 3).toString());
+        JTFatual.setText(TabelaProdutos.getValueAt(selectedRow, 4).toString());
+        JTFminima.setText(TabelaProdutos.getValueAt(selectedRow, 5).toString());
+        JTFmaxima.setText(TabelaProdutos.getValueAt(selectedRow, 6).toString());
+
+        // Categoria
+        Object categoriaObj = TabelaProdutos.getValueAt(selectedRow, 7);
+        if (categoriaObj instanceof Categoria cat) {
+            Categoria.setSelectedItem(cat);
+        } else if (categoriaObj != null) {
+            // Caso a tabela só tenha o nome da categoria
+            for (int i = 0; i < Categoria.getItemCount(); i++) {
+                if (Categoria.getItemAt(i).getNome().equals(categoriaObj.toString())) {
+                    Categoria.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_TabelaProdutosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -562,9 +585,9 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Categoria> Categoria;
     private javax.swing.JToggleButton JBAlterar;
     private javax.swing.JToggleButton JBApagar;
-    private javax.swing.JToggleButton JBReajustarPrecos;
     private javax.swing.JComboBox<String> JCBUnidade;
     private javax.swing.JTextField JTFId;
     private javax.swing.JTextField JTFNome;
@@ -573,7 +596,6 @@ public class FrmEditarProdutos extends javax.swing.JFrame {
     private javax.swing.JTextField JTFminima;
     private javax.swing.JTextField JTFpreco;
     private javax.swing.JTable TabelaProdutos;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

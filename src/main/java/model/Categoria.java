@@ -53,11 +53,7 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "Categoria{"
-                + "id=" + id
-                + ", nome='" + nome + '\''
-                + ", embalagem=" + embalagem
-                + ", tamanho=" + tamanho
-                + '}';
+        return nome; // agora o combo exibirá só o nome da categoria
     }
+
 }
