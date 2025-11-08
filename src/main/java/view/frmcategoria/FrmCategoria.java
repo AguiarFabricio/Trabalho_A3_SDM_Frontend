@@ -1,6 +1,7 @@
 package view.frmcategoria;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Categoria;
 import model.TamanhoProduto;
 import model.EmbalagemProduto;
@@ -11,6 +12,53 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     public FrmCategoria() {
         initComponents();
+        carregarCategorias();
+        // 🔹 Aqui você adiciona os valores do enum ao ComboBox
+        JCBEmbalagem2.removeAllItems(); // limpa se tiver algo
+        for (model.EmbalagemProduto e : model.EmbalagemProduto.values()) {
+            JCBEmbalagem2.addItem(e.name()); // adiciona PLASTICO, VIDRO, PAPELAO
+        }
+
+        // (opcional) Se quiser selecionar o primeiro item automaticamente
+        if (JCBEmbalagem2.getItemCount() > 0) {
+            JCBEmbalagem2.setSelectedIndex(0);
+        }
+
+        // 🔹 Faça o mesmo com o combo de tamanhos, se quiser
+        JCBTamanho1.removeAllItems();
+        for (model.TamanhoProduto t : model.TamanhoProduto.values()) {
+            JCBTamanho1.addItem(t.name());
+        }
+    }
+
+    private java.util.List<model.Categoria> listaDeCategorias;
+
+    private void carregarCategorias() {
+        try {
+            client.Cliente cliente = new client.Cliente();
+            cliente.conectar("localhost", 1234);
+            cliente.enviarComando("LISTAR_CATEGORIAS");
+            Object resposta = cliente.receberObjeto();
+            cliente.close();
+
+            DefaultTableModel model = (DefaultTableModel) TabelaCategorias.getModel();
+            model.setRowCount(0);
+
+            if (resposta instanceof java.util.List<?>) {
+                java.util.List<model.Categoria> lista = (java.util.List<model.Categoria>) resposta;
+                for (model.Categoria c : lista) {
+                    model.addRow(new Object[]{
+                        c.getId(),
+                        c.getNome(),
+                        c.getEmbalagem(),
+                        c.getTamanho()
+                    });
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao carregar categorias:\n" + e.getMessage());
+        }
     }
 
     /**
@@ -32,20 +80,19 @@ public class FrmCategoria extends javax.swing.JFrame {
         GuiaGerenciador = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCategoria = new javax.swing.JTable();
+        TabelaCategorias = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
-        JCBEmbalagem1 = new javax.swing.JComboBox<>();
         JCBTamanho1 = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        JTFNomeCadastro1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnApagar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         voltar = new javax.swing.JButton();
-        txtId = new javax.swing.JTextField();
+        JCBEmbalagem2 = new javax.swing.JComboBox<>();
+        JTFNomeCadastro1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,36 +154,36 @@ public class FrmCategoria extends javax.swing.JFrame {
             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jTableCategoria.setBackground(new java.awt.Color(255, 255, 255));
-        jTableCategoria.setForeground(new java.awt.Color(0, 0, 0));
-        jTableCategoria.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaCategorias.setBackground(new java.awt.Color(255, 255, 255));
+        TabelaCategorias.setForeground(new java.awt.Color(0, 0, 0));
+        TabelaCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nome", "Tamanho", "Embalagem"
+                "Id", "Nome", "Embalagem", "Tamanho"
             }
         ));
-        jTableCategoria.setToolTipText("");
-        jTableCategoria.addAncestorListener(new javax.swing.event.AncestorListener() {
+        TabelaCategorias.setToolTipText("");
+        TabelaCategorias.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTableCategoriaAncestorAdded(evt);
+                TabelaCategoriasAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane1.setViewportView(jTableCategoria);
+        TabelaCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaCategoriasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TabelaCategorias);
 
         jLabel10.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Cadastrar Categoria");
-
-        JCBEmbalagem1.setBackground(new java.awt.Color(255, 255, 255));
-        JCBEmbalagem1.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
-        JCBEmbalagem1.setForeground(new java.awt.Color(0, 0, 0));
-        JCBEmbalagem1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lata", "Vidro", "Plástico" }));
 
         JCBTamanho1.setBackground(new java.awt.Color(255, 255, 255));
         JCBTamanho1.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
@@ -156,34 +203,31 @@ public class FrmCategoria extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Tamanho");
 
-        JTFNomeCadastro1.setBackground(new java.awt.Color(255, 255, 255));
-        JTFNomeCadastro1.setForeground(new java.awt.Color(0, 0, 0));
-
         jLabel13.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("Nome");
+        jLabel13.setText("Categoria");
 
         jLabel14.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Gerenciar Categorias");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Apagar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnApagar.setBackground(new java.awt.Color(0, 0, 51));
+        btnApagar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnApagar.setForeground(new java.awt.Color(255, 255, 255));
+        btnApagar.setText("Apagar");
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnApagarActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 51));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Alterar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAlterar.setBackground(new java.awt.Color(0, 0, 51));
+        btnAlterar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAlterar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAlterarActionPerformed(evt);
             }
         });
 
@@ -217,9 +261,21 @@ public class FrmCategoria extends javax.swing.JFrame {
             }
         });
 
-        txtId.addActionListener(new java.awt.event.ActionListener() {
+        JCBEmbalagem2.setBackground(new java.awt.Color(255, 255, 255));
+        JCBEmbalagem2.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        JCBEmbalagem2.setForeground(new java.awt.Color(0, 0, 0));
+        JCBEmbalagem2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PLASTICO", "VIDRO", "PAPELAO", "LATA" }));
+        JCBEmbalagem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
+                JCBEmbalagem2ActionPerformed(evt);
+            }
+        });
+
+        JTFNomeCadastro1.setBackground(new java.awt.Color(255, 255, 255));
+        JTFNomeCadastro1.setForeground(new java.awt.Color(0, 0, 0));
+        JTFNomeCadastro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTFNomeCadastro1ActionPerformed(evt);
             }
         });
 
@@ -249,28 +305,23 @@ public class FrmCategoria extends javax.swing.JFrame {
                                     .addComponent(JCBEmbalagem, 0, 242, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
-                                .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(voltar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelInicioLayout.createSequentialGroup()
-                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(59, 59, 59)))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                                .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(116, 116, 116)
-                .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PainelInicioLayout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JCBTamanho1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JCBTamanho1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(JTFNomeCadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JCBEmbalagem1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PainelInicioLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jLabel14)))
+                        .addComponent(jLabel14))
+                    .addComponent(JCBEmbalagem2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTFNomeCadastro1))
                 .addGap(58, 58, 58))
         );
         PainelInicioLayout.setVerticalGroup(
@@ -278,19 +329,27 @@ public class FrmCategoria extends javax.swing.JFrame {
             .addGroup(PainelInicioLayout.createSequentialGroup()
                 .addComponent(GuiaGerenciador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelInicioLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTFNomeCadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JCBTamanho1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JCBEmbalagem2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PainelInicioLayout.createSequentialGroup()
                         .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(jLabel14))
-                        .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PainelInicioLayout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jLabel7))
-                            .addGroup(PainelInicioLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel7)
+                        .addGap(10, 10, 10)
                         .addComponent(JTFNomeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(jLabel8)
@@ -299,24 +358,11 @@ public class FrmCategoria extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JCBEmbalagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelInicioLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JTFNomeCadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JCBTamanho1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JCBEmbalagem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(JCBEmbalagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(38, 38, 38)
                 .addGroup(PainelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(btnApagar)
+                    .addComponent(btnAlterar)
                     .addComponent(jButton4)
                     .addComponent(voltar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
@@ -395,52 +441,62 @@ public class FrmCategoria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        int linha = TabelaCategorias.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione uma categoria na tabela para alterar.");
+            return;
+        }
+
+        int id = (int) TabelaCategorias.getValueAt(linha, 0);
+        String nome = JTFNomeCadastro1.getText().trim();
+
+        if (nome.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o nome da categoria.");
+            return;
+        }
+
+        // 🔥 Aqui o pulo do gato:
+        Object embObj = JCBEmbalagem2.getSelectedItem();
+        Object tamObj = JCBTamanho1.getSelectedItem();
+
+        model.EmbalagemProduto embalagem = null;
+        model.TamanhoProduto tamanho = null;
+
+        if (embObj instanceof model.EmbalagemProduto) {
+            embalagem = (model.EmbalagemProduto) embObj;
+        } else if (embObj instanceof String) {
+            embalagem = model.EmbalagemProduto.valueOf(((String) embObj).toUpperCase());
+        }
+
+        if (tamObj instanceof model.TamanhoProduto) {
+            tamanho = (model.TamanhoProduto) tamObj;
+        } else if (tamObj instanceof String) {
+            tamanho = model.TamanhoProduto.valueOf(((String) tamObj).toUpperCase());
+        }
+
+        // Monta o objeto categoria
+        model.Categoria categoria = new model.Categoria();
+        categoria.setId(id);
+        categoria.setNome(nome);
+        categoria.setEmbalagem(embalagem);
+        categoria.setTamanho(tamanho);
+
         try {
-            int selectedRow = jTableCategoria.getSelectedRow();
-
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this,
-                        "Selecione uma categoria na tabela para alterar.",
-                        "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            // Pega o ID da primeira coluna da tabela
-            int id = (int) jTableCategoria.getValueAt(selectedRow, 0);
-            String nome = JTFNomeCadastro1.getText().trim();
-            String tamanho = (String) JCBTamanho1.getSelectedItem();
-            String embalagem = (String) JCBEmbalagem1.getSelectedItem();
-
-            if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Informe o novo nome da categoria.",
-                        "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            // Cria o objeto Categoria com os novos dados
-            Categoria categoria = new Categoria();
-            categoria.setId(id);
-            categoria.setNome(nome);
-            categoria.setTamanho(model.TamanhoProduto.valueOf(tamanho.toUpperCase()));
-            categoria.setEmbalagem(model.EmbalagemProduto.valueOf(embalagem.toUpperCase()));
-
-            // Envia atualização para o servidor
             client.Cliente cliente = new client.Cliente();
             cliente.conectar("localhost", 1234);
             cliente.enviarComando("ATUALIZAR_CATEGORIA");
             cliente.enviarObjeto(categoria);
+
             String resposta = cliente.receberMensagem();
             cliente.close();
 
             JOptionPane.showMessageDialog(this,
-                    (resposta != null ? resposta : "Categoria alterada com sucesso!"),
+                    resposta != null ? resposta : "Categoria alterada com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-            // Limpa os campos
-            JTFNomeCadastro1.setText("");
+            carregarCategorias(); // Atualiza a tabela
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -448,22 +504,33 @@ public class FrmCategoria extends javax.swing.JFrame {
                     "Erro ao alterar categoria:\n" + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         try {
-            String idTexto = txtId.getText().trim(); // ✅ corrigido
+            int selectedRow = TabelaCategorias.getSelectedRow();
 
-            if (idTexto.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Informe o ID da categoria para apagar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this,
+                        "Selecione uma categoria na tabela para apagar.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            int id = Integer.parseInt(idTexto);
+            int id = (int) TabelaCategorias.getValueAt(selectedRow, 0);
+            String nome = TabelaCategorias.getValueAt(selectedRow, 1).toString();
+
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Tem certeza que deseja apagar a categoria \"" + nome + "\"?",
+                    "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
 
             client.Cliente cliente = new client.Cliente();
             cliente.conectar("localhost", 1234);
-
             cliente.enviarComando("EXCLUIR_CATEGORIA");
             cliente.enviarObjeto(id);
 
@@ -474,9 +541,11 @@ public class FrmCategoria extends javax.swing.JFrame {
                     (resposta != null ? resposta : "Categoria removida com sucesso!"),
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-            // 🧹 Limpa os campos
-            txtId.setText(""); // ✅ corrigido
-            JTFNomeCadastro.setText("");
+            // 🧹 Limpa os campos e atualiza a tabela
+            JTFNomeCadastro1.setText("");
+            JCBTamanho1.setSelectedIndex(0);
+            JCBEmbalagem2.setSelectedIndex(0);
+            carregarCategorias();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -484,15 +553,16 @@ public class FrmCategoria extends javax.swing.JFrame {
                     "Erro ao apagar categoria:\n" + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_btnApagarActionPerformed
 
     private void JCBTamanho1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTamanho1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JCBTamanho1ActionPerformed
 
-    private void jTableCategoriaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTableCategoriaAncestorAdded
+    private void TabelaCategoriasAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_TabelaCategoriasAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTableCategoriaAncestorAdded
+    }//GEN-LAST:event_TabelaCategoriasAncestorAdded
 
     private void JTFNomeCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFNomeCadastroActionPerformed
         // TODO add your handling code here:
@@ -502,10 +572,43 @@ public class FrmCategoria extends javax.swing.JFrame {
         // Não implementado
     }//GEN-LAST:event_JCBTamanhoActionPerformed
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+    private void JTFNomeCadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFNomeCadastro1ActionPerformed
         // TODO add your handling code here:
-        txtId.setEnabled(false);
-    }//GEN-LAST:event_txtIdActionPerformed
+    }//GEN-LAST:event_JTFNomeCadastro1ActionPerformed
+
+    private void JCBEmbalagem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBEmbalagem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JCBEmbalagem2ActionPerformed
+
+    private void TabelaCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaCategoriasMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = TabelaCategorias.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        // Coluna 1 = Nome da categoria
+        Object nomeObj = TabelaCategorias.getValueAt(selectedRow, 1);
+        if (nomeObj != null) {
+            JTFNomeCadastro1.setText(nomeObj.toString());
+        }
+
+        // Coluna 2 = Embalagem (Enum)
+        Object embObj = TabelaCategorias.getValueAt(selectedRow, 2);
+        if (embObj instanceof model.EmbalagemProduto emb) {
+            JCBEmbalagem2.setSelectedItem(emb.name());
+        } else if (embObj != null) {
+            JCBEmbalagem2.setSelectedItem(embObj.toString());
+        }
+
+        // Coluna 3 = Tamanho (Enum)
+        Object tamObj = TabelaCategorias.getValueAt(selectedRow, 3);
+        if (tamObj instanceof model.TamanhoProduto tam) {
+            JCBTamanho1.setSelectedItem(tam.name());
+        } else if (tamObj != null) {
+            JCBTamanho1.setSelectedItem(tamObj.toString());
+        }
+    }//GEN-LAST:event_TabelaCategoriasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -535,14 +638,15 @@ public class FrmCategoria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel GuiaGerenciador;
     private javax.swing.JComboBox<String> JCBEmbalagem;
-    private javax.swing.JComboBox<String> JCBEmbalagem1;
+    private javax.swing.JComboBox<String> JCBEmbalagem2;
     private javax.swing.JComboBox<String> JCBTamanho;
     private javax.swing.JComboBox<String> JCBTamanho1;
     private javax.swing.JTextField JTFNomeCadastro;
     private javax.swing.JTextField JTFNomeCadastro1;
     private javax.swing.JPanel PainelInicio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTable TabelaCategorias;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnApagar;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -554,8 +658,6 @@ public class FrmCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCategoria;
-    private javax.swing.JTextField txtId;
     private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }
