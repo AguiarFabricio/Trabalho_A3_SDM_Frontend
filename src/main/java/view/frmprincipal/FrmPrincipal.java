@@ -5,8 +5,8 @@
 package view.frmprincipal;
 
 import view.frmcategoria.FrmCategoria;
+import view.frmmovimentacao.FrmMovimentarEstoque;
 import view.frmproduto.FrmGerenciarProdutos;
-
 
 /**
  *
@@ -21,6 +21,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
      */
     public FrmPrincipal() {
         initComponents();
+        // No construtor do seu JFrame ou no initComponents()
+        this.setResizable(false);
 
         // Configura o cursor de "mão" para todas as labels
         GerenciarCat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -145,6 +147,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         MovimentarEst.setForeground(new java.awt.Color(255, 255, 255));
         MovimentarEst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconConfig.png"))); // NOI18N
         MovimentarEst.setText("Movimentar Estoque");
+        MovimentarEst.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MovimentarEstMouseClicked(evt);
+            }
+        });
 
         Relatorios.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Relatorios.setForeground(new java.awt.Color(255, 255, 255));
@@ -155,31 +162,33 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 51));
-        jLabel4.setText("Sistema de Gerenciamento de Estoque");
+        jLabel4.setText("Controle de Estoque");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel5.setText("© 2025 A3 Sistemas Distribuidos. Luiz, Mario e Fabricio. Todos os direitos reservados.");
+        jLabel5.setText("© 2025 A3 Sistemas Distribuidos. Luiz, Mario e Fabricio.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(220, 220, 220))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(244, 244, 244)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(258, Short.MAX_VALUE)
+                .addContainerGap(254, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(222, 222, 222)
+                .addGap(221, 221, 221)
                 .addComponent(jLabel5)
-                .addGap(16, 16, 16))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout GuiaGerenciadorLayout = new javax.swing.GroupLayout(GuiaGerenciador);
@@ -203,7 +212,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(GuiaGerenciadorLayout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         GuiaGerenciadorLayout.setVerticalGroup(
@@ -274,6 +283,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     "Erro ao abrir a tela de Categorias: " + e.getMessage());
         }
     }//GEN-LAST:event_GerenciarCatMouseClicked
+
+    private void MovimentarEstMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MovimentarEstMouseClicked
+        // TODO add your handling code here:
+        try {
+            FrmMovimentarEstoque FrmMovimentarEstoque = new FrmMovimentarEstoque();
+            FrmMovimentarEstoque.setVisible(true);
+            FrmMovimentarEstoque.setLocationRelativeTo(this); // centraliza em relação à janela atual
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao abrir a tela de Categorias: " + e.getMessage());
+        }
+    }//GEN-LAST:event_MovimentarEstMouseClicked
 
     /**
      * @param args the command line arguments
