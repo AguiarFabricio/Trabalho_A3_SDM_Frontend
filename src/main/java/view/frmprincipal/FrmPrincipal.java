@@ -7,6 +7,7 @@ package view.frmprincipal;
 import view.frmcategoria.FrmCategoria;
 import view.frmmovimentacao.FrmMovimentarEstoque;
 import view.frmproduto.FrmGerenciarProdutos;
+import view.frmrelatorio.FrmRelatorio;
 
 /**
  *
@@ -157,6 +158,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         Relatorios.setForeground(new java.awt.Color(255, 255, 255));
         Relatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconRelatorio.png"))); // NOI18N
         Relatorios.setText("Relatórios");
+        Relatorios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RelatoriosMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -296,6 +302,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     "Erro ao abrir a tela de Categorias: " + e.getMessage());
         }
     }//GEN-LAST:event_MovimentarEstMouseClicked
+
+    private void RelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RelatoriosMouseClicked
+        // TODO add your handling code here:
+        try {
+            FrmRelatorio FrmRelatorio = new FrmRelatorio();
+            FrmRelatorio.setVisible(true);
+            FrmRelatorio.setLocationRelativeTo(this); // centraliza em relação à janela atual
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao abrir a tela de Categorias: " + e.getMessage());
+        }
+    }//GEN-LAST:event_RelatoriosMouseClicked
 
     /**
      * @param args the command line arguments
