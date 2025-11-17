@@ -40,12 +40,12 @@
 
 Ambiente de Desenvolvimento:
 O projeto foi desenvolvido em ambiente local utilizando as seguintes ferramentas e tecnologias:
-* • IDE: Apache NetBeans 27
-* • Banco de Dados: MySQL Server 9.4.0
-* • Versão do Java: Java 25
-* • Sistema Operacional: Windows 10/11
-* • Controle de Versão: Git 2.44.0, com repositório hospedado no GitHub
-* • Arquitetura: Estrutura distribuída em duas camadas (serviços e consumo de serviços), com comunicação via Sockets.
+*  IDE: Apache NetBeans 27
+*  Banco de Dados: MySQL Server 9.4.0
+*  Versão do Java: Java 25
+*  Sistema Operacional: Windows 10/11
+*  Controle de Versão: Git 2.44.0, com repositório hospedado no GitHub
+*  Arquitetura: Estrutura distribuída em duas camadas (serviços e consumo de serviços), com comunicação via Sockets.
 
 ## Repositório Backend
 https://github.com/AguiarFabricio/Trabalho_A3_SDM_Backend
