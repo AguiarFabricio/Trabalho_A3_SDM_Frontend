@@ -14,11 +14,12 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     public FrmCategoria() {
         initComponents();
+        carregarEnumsNosCombos();
         carregarCategorias();
         // 🔹 Aqui você adiciona os valores do enum ao ComboBox
-        JCBEmbalagem2.removeAllItems(); // limpa se tiver algo
+        JCBEmbalagem2.removeAllItems();
         for (model.EmbalagemProduto e : model.EmbalagemProduto.values()) {
-            JCBEmbalagem2.addItem(e.name()); // adiciona PLASTICO, VIDRO, PAPELAO
+            JCBEmbalagem2.addItem(e.name());
         }
 
         // (opcional) Se quiser selecionar o primeiro item automaticamente
@@ -30,6 +31,21 @@ public class FrmCategoria extends javax.swing.JFrame {
         JCBTamanho1.removeAllItems();
         for (model.TamanhoProduto t : model.TamanhoProduto.values()) {
             JCBTamanho1.addItem(t.name());
+        }
+    }
+
+    private void carregarEnumsNosCombos() {
+
+        // --- Preencher Tamanhos ---
+        JCBTamanho.removeAllItems();
+        for (model.TamanhoProduto t : model.TamanhoProduto.values()) {
+            JCBTamanho.addItem(t.name());
+        }
+
+        // --- Preencher Embalagens ---
+        JCBEmbalagem.removeAllItems();
+        for (model.EmbalagemProduto e : model.EmbalagemProduto.values()) {
+            JCBEmbalagem.addItem(e.name());
         }
     }
 
@@ -102,7 +118,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         JCBEmbalagem.setBackground(new java.awt.Color(255, 255, 255));
         JCBEmbalagem.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         JCBEmbalagem.setForeground(new java.awt.Color(0, 0, 0));
-        JCBEmbalagem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lata", "Vidro", "Plástico" }));
+        JCBEmbalagem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LATA", "VIDRO", "PLASTICO" }));
 
         jLabel9.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -579,13 +595,12 @@ public class FrmCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_JCBEmbalagem2ActionPerformed
 
     private void TabelaCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaCategoriasMouseClicked
-        // TODO add your handling code here:
         int selectedRow = TabelaCategorias.getSelectedRow();
         if (selectedRow == -1) {
             return;
         }
 
-        // Coluna 1 = Nome da categoria
+        // Coluna 1 = Nome
         Object nomeObj = TabelaCategorias.getValueAt(selectedRow, 1);
         if (nomeObj != null) {
             JTFNomeCadastro1.setText(nomeObj.toString());
